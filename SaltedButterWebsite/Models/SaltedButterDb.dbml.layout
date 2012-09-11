@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="PlaceSatedButter">
+  <DataContextMoniker Name="/PlaceSatedButterDataContext" />
+  <nestedChildShapes>
+    <classShape Id="1a5fce5a-2784-42fb-beb1-19bd6e5bb95b" absoluteBounds="0.625, 0.625, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/PlaceSatedButterDataContext/Place" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0fcf3278-2c97-4e13-835a-45a0a7dcb7ae" absoluteBounds="0.64000000000000012, 1.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2877905b-1e2c-41f9-b584-08740e23824f" absoluteBounds="4.625, 0.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/PlaceSatedButterDataContext/Action" />
+      <nestedChildShapes>
+        <elementListCompartment Id="986be928-5715-4081-950e-9998467cc99f" absoluteBounds="4.64, 0.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="51b0c840-f11c-46c7-aa01-096980371055" absoluteBounds="4, 3.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/PlaceSatedButterDataContext/SaltedButter" />
+      <nestedChildShapes>
+        <elementListCompartment Id="990f4cd8-95e5-4f65-817d-1708e4df57ce" absoluteBounds="4.015, 4.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6f0ec287-0163-471a-a06e-70588e3d0afa" absoluteBounds="7.25, 2.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PlaceSatedButterDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="498d1c26-c4fb-44c0-ac68-1c8ae641a5d9" absoluteBounds="7.265, 3.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 1.73640055338542); (4.625 : 1.73640055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PlaceSatedButterDataContext/Place/Place_Action" />
+      <nodes>
+        <classShapeMoniker Id="1a5fce5a-2784-42fb-beb1-19bd6e5bb95b" />
+        <classShapeMoniker Id="2877905b-1e2c-41f9-b584-08740e23824f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.3125 : 3.75); (5.3125 : 2.84780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PlaceSatedButterDataContext/SaltedButter/SaltedButter_Action" />
+      <nodes>
+        <classShapeMoniker Id="51b0c840-f11c-46c7-aa01-096980371055" />
+        <classShapeMoniker Id="2877905b-1e2c-41f9-b584-08740e23824f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.25 : 3.29890305338542); (6.34375 : 3.29890305338542); (6.34375 : 2.84780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PlaceSatedButterDataContext/User/User_Action" />
+      <nodes>
+        <classShapeMoniker Id="6f0ec287-0163-471a-a06e-70588e3d0afa" />
+        <classShapeMoniker Id="2877905b-1e2c-41f9-b584-08740e23824f" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

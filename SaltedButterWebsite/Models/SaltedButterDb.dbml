@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bsw" Class="PlaceSatedButterDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=JULIE-PC\SQLEXPRESS;Initial Catalog=bsw;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bswConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.T_PLACE" Member="Places">
+    <Type Name="Place">
+      <Column Name="PLC_ID" Member="ID" Storage="_PLC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PLC_NAME" Member="Name" Storage="_PLC_NAME" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TYP_ID" Member="TypeId" Storage="_TYP_ID" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="PLC_ADDRESS1" Member="Address1" Storage="_PLC_ADDRESS1" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PLC_ADDRESS2" Member="Address2" Storage="_PLC_ADDRESS2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PLC_CITY" Member="City" Storage="_PLC_CITY" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_PC" Member="PostalCode" Storage="_PLC_PC" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CTR_ID" Member="CountryId" Storage="_CTR_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_LATITUDE" Member="Latitude" Storage="_PLC_LATITUDE" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_LONGITUDE" Member="Longitude" Storage="_PLC_LONGITUDE" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_ACTIVE" Member="Active" Storage="_PLC_ACTIVE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Place_Action" Member="Actions" Storage="_T_ACTIONs" AccessModifier="Internal" ThisKey="ID" OtherKey="PlaceId" Type="Action" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_ACTION" Member="Actions">
+    <Type Name="Action">
+      <Column Name="ACT_ID" Member="ID" Storage="_ACT_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="USR_ID" Member="UserId" Storage="_USR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_ID" Member="PlaceId" Storage="_PLC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CAT_ID" Member="CategoryId" Storage="_CAT_ID" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="STS_ID" Member="StatusId" Storage="_STS_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="ACT_CREATION_DATE" Member="CreationDate" Storage="_ACT_CREATION_DATE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ACT_PROCESSING_DATE" Member="ProcessingDate" Storage="_ACT_PROCESSING_DATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EXT_ID" Member="DetailId" Storage="_EXT_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Place_Action" Member="Place" Storage="_T_PLACE" ThisKey="PlaceId" OtherKey="ID" Type="Place" IsForeignKey="true" />
+      <Association Name="SaltedButter_Action" Member="SaltedButter" Storage="_T_SALTED_BUTTER" ThisKey="DetailId" OtherKey="ID" Type="SaltedButter" IsForeignKey="true" />
+      <Association Name="User_Action" Member="User" ThisKey="UserId" OtherKey="ID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_SALTED_BUTTER" Member="SaltedButters">
+    <Type Name="SaltedButter">
+      <Column Name="SLT_ID" Member="ID" Storage="_SLT_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SLT_SALTED" Member="Salted" Storage="_SLT_SALTED" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SLT_COMMENT" Member="Comment" Storage="_SLT_COMMENT" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SLT_PLATE" Member="Plate" Storage="_SLT_PLATE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PHO_ID" Member="Photo" Storage="_PHO_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="SaltedButter_Action" Member="Actions" Storage="_T_ACTIONs" AccessModifier="Internal" ThisKey="ID" OtherKey="DetailId" Type="Action" />
+    </Type>
+  </Table>
+  <Table Name="dbo.T_USER" Member="Users">
+    <Type Name="User">
+      <Column Name="USR_ID" Member="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="USR_EMAIL" Member="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="USR_LOGIN" Member="Username" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="USR_PWD" Member="Password" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="USR_CREATION" Member="CreationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="USR_ALTER" Member="AlterationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_Action" Member="Actions" AccessModifier="Internal" ThisKey="ID" OtherKey="UserId" Type="Action" />
+    </Type>
+  </Table>
+</Database>

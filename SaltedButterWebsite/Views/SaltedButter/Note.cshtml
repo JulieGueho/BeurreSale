@@ -1,0 +1,25 @@
+﻿@model SaltedButterWebsite.ViewModel.SaltedButterViewModel
+
+<div class="modal">
+	<div class="modal-header">
+        <div id="place-name">@Model.Name</div>
+        <div id="place-adress">
+            @foreach (string addressLine in Model.Address)
+            {
+                if (!string.IsNullOrWhiteSpace(addressLine))
+                {
+                    <span>@addressLine</span><br />
+                }
+            }                           
+        </div>
+    </div>
+    <div class="modal-body">
+        <div id="status"></div>
+        <div id="photo"></div>
+        <div id="comment">@Model.Comment</div>
+    </div>
+    <div class="modal-footer">
+        Par @Model.Author il y a @Model.Interval</div>
+    </div>
+</div>
+                

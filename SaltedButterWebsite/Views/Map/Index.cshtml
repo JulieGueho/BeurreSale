@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div id="test"></div>
+    <div id="header">
+        <img id="star" src="~/Static/img/star.png" alt="logo-star"/>
+        <img id="logo" src="~/Static/img/logo.png" alt="logo-beuresale.fr"/>			
+    </div>
+    <div id="container-main">
+        <div id="search-header">
+			<div class="control-group">				
+				<div class="controls">
+					<div class="input-append">
+						<form id="search-submit">
+						<input class="span2" id="appendedInputButton" size="16" type="text" placeholder="Adresse, lieu, ville...">
+						<button class="btn" type="submit">Rechercher</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div id="map_canvas"></div>
+        <div id="note"></div>
+    </div>
+</asp:Content>
+
+

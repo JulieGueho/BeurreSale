@@ -1,0 +1,63 @@
+﻿@model SaltedButterWebsite.ViewModel.SaltedButterViewModel
+
+
+<div class="modal">
+    <form id="addForm" action="SaltedButter/Create" method="post" class="form-horizontal">
+    <input type="hidden" id="placeid" name="PlaceId" value="@Model.PlaceId" />
+	<div class="modal-header">
+        <div id="place-name">
+            <div class="control-group">
+                <label class="control-label" for="inputPlaceName">Nom du lieu</label>
+                <div class="controls">
+                  <input type="text" id="inputPlaceName" name="Name" placeholder="Nom du lieu" value="@Model.Name"/>
+                  @Html.ValidationMessageFor(model=>model.Name)
+                </div>
+              </div>
+        </div>
+        <div id="place-adress">
+        @Model.AddressText
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="control-group">
+            <label class="control-label" for="optionsRadios1">Statut : Salé ou pas ?</label>
+            <div class="controls">
+                <label class="radio inline">
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="true"/>
+                  Salé
+                </label>
+                <label class="radio inline">
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="false"/>
+                  Non salé
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="textareaComment">Commentaire</label>
+            <div class="controls">
+                <textarea id="textareaComment" placeholder="Ce que vous avez aimé ou pas dans ce lieu."></textarea>
+            </div>
+        </div>      
+    </div>
+    <div class="modal-footer">
+        <div class="control-group">
+            <label class="control-label" for="inputUsername">Votre nom</label>
+            <div class="controls">
+              <input type="password" id="inputUsername" placeholder="Bibi, bubu, ou baba...">
+            </div>
+          </div>
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Votre email</label>
+            <div class="controls">
+              <input type="text" id="inputEmail" placeholder="Email">
+            </div>
+          </div>
+          
+    </div>
+    <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <button type="button" class="btn">Annuler</button>                     
+    </div>
+</div>
+     
+
