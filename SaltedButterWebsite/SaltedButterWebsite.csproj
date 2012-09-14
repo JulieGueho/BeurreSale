@@ -134,9 +134,11 @@
     <Content Include="Global.asax" />
     <Content Include="Static\css\bootstrap-responsive.css" />
     <Content Include="Static\css\bootstrap.css" />
+    <Content Include="Static\css\jquery.jgrowl.css" />
     <Content Include="Static\css\leaflet.css" />
     <Content Include="Static\css\leaflet.ie.css" />
     <Content Include="Static\css\main.css" />
+    <Content Include="Static\img\bg-notification.png" />
     <Content Include="Static\img\btn-background.png" />
     <Content Include="Static\img\checkin_foursquare.png" />
     <Content Include="Static\img\layers.png" />
@@ -151,6 +153,7 @@
     <Content Include="Static\img\powered_by_foursquare.png" />
     <Content Include="Static\img\star.png" />
     <Content Include="Static\img\subtitle.png" />
+    <Content Include="Static\img\thumbs-up.gif" />
     <Content Include="Static\img\title.png" />
     <Content Include="Static\img\zoom-in.png" />
     <Content Include="Static\img\zoom-out.png" />
@@ -158,6 +161,7 @@
     <Content Include="Static\js\jquery-1.8.0.min.js" />
     <Content Include="Static\js\jquery-ui-1.8.11.js" />
     <Content Include="Static\js\jquery-ui-1.8.11.min.js" />
+    <Content Include="Static\js\jquery.jgrowl_minimized.js" />
     <Content Include="Static\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Static\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Static\js\jquery.validate-vsdoc.js" />

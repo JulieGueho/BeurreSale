@@ -13,17 +13,27 @@
         <div id="search-header">
 			<div class="control-group">				
 				<div class="controls">
-					<div class="input-append">
-						<form id="search-submit">
-						<input class="span2" id="appendedInputButton" size="16" type="text" placeholder="Adresse, lieu, ville...">
-						<button class="btn" type="submit">Rechercher</button>
-						</form>
-					</div>
+					<form id="search-submit" class="form-search">                        
+                        <div class="input-append">
+						    <input id="appendedInputButton" class="span2 search-query" type="text" placeholder="Adresse, lieu, ville...">
+						    <button class="btn" type="submit">Rechercher</button>
+                        </div>
+					</form>
 				</div>
 			</div>
 		</div>
         <div id="map_canvas"></div>
         <div id="note"></div>
+    </div>
+    @if (TempData["success"] != null)
+    {
+        @Html.Hidden("success", TempData["success"]);
+    }
+    <div id="notification-bar" class="hero-unit">                
+        <div id="icon"></div>
+        <h1 id="message">Merci !</h1>
+        <p id="sub-message">Le lieu a bien été enregistré.</p>      
+        <button id="close-notification" type="button" class="close" data-dismiss="hero-unit">×</button>      
     </div>
 </asp:Content>
 

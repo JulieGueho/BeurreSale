@@ -27,6 +27,13 @@
         });
 
         map.on('moveend', setMarkerLayer);
+
+        if ($("input[name='success']").length > 0) {
+            $("#notification-bar").show();
+            $("#close-notification").click(function () {
+                $("#notification-bar").hide();
+            });
+        }
     });
 
     // Get markers which fit in the viewport

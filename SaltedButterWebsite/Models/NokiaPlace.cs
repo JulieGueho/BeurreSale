@@ -16,7 +16,7 @@ namespace SaltedButterWebsite.Models
 
     public class Location
     {
-        public decimal[] Position { get; set; }
+        public double[] Position { get; set; }
         public Dictionary<string,string> Address { get; set; }
         //public decimal[] Bbox { get; set; }
 
