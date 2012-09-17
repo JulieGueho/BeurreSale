@@ -47,7 +47,8 @@ namespace SaltedButterWebsite.Controllers
                 UserName = saltedButterPlace.User.Username,
                 Comment = saltedButterPlace.SaltedButter.Comment,
                 Interval = GetInterval(saltedButterPlace.CreationDate),
-                Name = saltedButterPlace.Place.Name
+                Name = saltedButterPlace.Place.Name,
+                Status = saltedButterPlace.SaltedButter.Salted.ToString()
             };
 
             saltedButterViewModel.AddressText = saltedButterViewModel.GetFrenchAddressFormat(saltedButterPlace.Place);
@@ -77,15 +78,7 @@ namespace SaltedButterWebsite.Controllers
                 {
                     // Mapping information provided by API
                     NokiaPlace nokiaPlace = (NokiaPlace)readTask.Result;                    
-                    place.AddressText = nokiaPlace.Location.Address["text"];
-                    //place.Address1 = nokiaPlace.Location.Address["street"];
-                    //place.Address2 = nokiaPlace.Location.Address["district"];
-                    //place.City = nokiaPlace.Location.Address["city"];
-                    //place.PostalCode = nokiaPlace.Location.Address["postalCode"];
-                    //place.CountryCode = nokiaPlace.Location.Address["countryCode"];
-                    //place.Position = new double();                    
-                    //place.Position[0] = nokiaPlace.Location.Position[0];
-                    //place.Position[1] = nokiaPlace.Location.Position[1];
+                    place.AddressText = nokiaPlace.Location.Address["text"];                   
                     place.PlaceId = nokiaPlace.PlaceId;
                          
                 });
@@ -104,14 +97,70 @@ namespace SaltedButterWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                SaltedButterWebsite.Models.Place place = new Models.Place()
+                Models.Place place = new Models.Place();
+                string _address = "http://demo.places.nlp.nokia.com/places/v1/places/" + submittedPlace.PlaceId + "?app_id=EOXbMEWYAllPhQnAQsmn&app_code=9TIppnJDB9PHy8-ckJLWXA";                
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                // Send a request asynchronously continue when complete
+                var taskGet = client.GetAsync(_address).ContinueWith(
+                (requestTask) =>
                 {
-                    Name = submittedPlace.Name,                    
+                    // Get HTTP response from completed task. 
+                    HttpResponseMessage response = requestTask.Result;
+
+                    // Check that response was successful or throw exception 
+                    response.EnsureSuccessStatusCode();
+
+                    response.Content.ReadAsAsync(typeof(NokiaPlace)).ContinueWith(
+                    (readTask) =>
+                    {
+                        // Mapping information provided by API
+                        NokiaPlace nokiaPlace = (NokiaPlace)readTask.Result;        
+                        place.Address1 = nokiaPlace.Location.Address["street"];
+                        place.Address2 = nokiaPlace.Location.Address["district"];
+                        place.City = nokiaPlace.Location.Address["city"];
+                        place.PostalCode = nokiaPlace.Location.Address["postalCode"];
+                        place.Country = nokiaPlace.Location.Address["country"];
+                        place.Latitude = nokiaPlace.Location.Position[0];
+                        place.Longitude = nokiaPlace.Location.Position[1];
+                    });
+
+                });
+
+                place.Name = submittedPlace.Name;
+
+                Models.User user = new Models.User(){
+                    Email = submittedPlace.Email,
+                    Username = submittedPlace.UserName,
+                    CreationDate = DateTime.Now
                 };
+
+                Models.SaltedButter saltedButter = new Models.SaltedButter()
+                {
+                    Salted = Convert.ToBoolean(submittedPlace.Status),
+                    Comment = submittedPlace.Comment
+                };                
+
+                taskGet.Wait();
+
+                Models.Action action = new Models.Action()
+                {
+                    Place = place,
+                    SaltedButter = saltedButter,
+                    User = user,
+                    CreationDate = DateTime.Now,
+                    StatusId = 1
+                };
+
+                _dataContext.Actions.InsertOnSubmit(action);
+
+                _dataContext.SubmitChanges();
 
                 //_dataContext.Places.InsertOnSubmit(place);
                 TempData["success"] = "ok"; // Indicating to display ok notification after redirection
                 return Json(new { url = "Map" });
+                
             }
 
             return PartialView("NoteAdd",submittedPlace);

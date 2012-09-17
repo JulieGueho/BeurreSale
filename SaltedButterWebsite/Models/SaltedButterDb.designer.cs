@@ -127,13 +127,13 @@ namespace SaltedButterWebsite.Models
 		
 		private string _PLC_PC;
 		
-		private byte _CTR_ID;
-		
 		private double _PLC_LATITUDE;
 		
 		private double _PLC_LONGITUDE;
 		
 		private bool _PLC_ACTIVE;
+		
+		private string _Country;
 		
 		private EntitySet<Action> _T_ACTIONs;
 		
@@ -155,14 +155,14 @@ namespace SaltedButterWebsite.Models
     partial void OnCityChanged();
     partial void OnPostalCodeChanging(string value);
     partial void OnPostalCodeChanged();
-    partial void OnCountryIdChanging(byte value);
-    partial void OnCountryIdChanged();
     partial void OnLatitudeChanging(double value);
     partial void OnLatitudeChanged();
     partial void OnLongitudeChanging(double value);
     partial void OnLongitudeChanged();
     partial void OnActiveChanging(bool value);
     partial void OnActiveChanged();
+    partial void OnCountryChanging(string value);
+    partial void OnCountryChanged();
     #endregion
 		
 		public Place()
@@ -311,26 +311,6 @@ namespace SaltedButterWebsite.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="CTR_ID", Storage="_CTR_ID", DbType="TinyInt NOT NULL")]
-		public byte CountryId
-		{
-			get
-			{
-				return this._CTR_ID;
-			}
-			set
-			{
-				if ((this._CTR_ID != value))
-				{
-					this.OnCountryIdChanging(value);
-					this.SendPropertyChanging();
-					this._CTR_ID = value;
-					this.SendPropertyChanged("CountryId");
-					this.OnCountryIdChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="PLC_LATITUDE", Storage="_PLC_LATITUDE", DbType="Float NOT NULL")]
 		public double Latitude
 		{
@@ -387,6 +367,26 @@ namespace SaltedButterWebsite.Models
 					this._PLC_ACTIVE = value;
 					this.SendPropertyChanged("Active");
 					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="PLC_COUNTRY", Storage="_Country", CanBeNull=false)]
+		public string Country
+		{
+			get
+			{
+				return this._Country;
+			}
+			set
+			{
+				if ((this._Country != value))
+				{
+					this.OnCountryChanging(value);
+					this.SendPropertyChanging();
+					this._Country = value;
+					this.SendPropertyChanged("Country");
+					this.OnCountryChanged();
 				}
 			}
 		}

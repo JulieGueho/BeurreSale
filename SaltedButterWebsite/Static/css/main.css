@@ -92,6 +92,7 @@ body{
     position:absolute;
     top:110px;
     left:160px;
+    overflow:hidden;
 }
 
 .modal img{
@@ -108,14 +109,13 @@ fieldset{
     text-align:left;
 }
 
-.modal-footer{
-    text-align:left;
+#author{
+    padding: 10px 25px;
+    font-style: italic;
+    font-size: 12px;
+    text-align: right;
 }
 
-.modal-body, .modal-footer, .modal-header
-{
-    padding: 15px 15px 0px 15px;
-}
 
 .form-actions {
 padding: 15px 15px 0px;

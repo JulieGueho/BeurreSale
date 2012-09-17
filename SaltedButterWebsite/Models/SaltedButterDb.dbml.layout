@@ -33,14 +33,14 @@
         <classShapeMoniker Id="2877905b-1e2c-41f9-b584-08740e23824f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.3125 : 3.75); (5.3125 : 2.84780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.3125 : 3.75); (5.3125 : 2.84780110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlaceSatedButterDataContext/SaltedButter/SaltedButter_Action" />
       <nodes>
         <classShapeMoniker Id="51b0c840-f11c-46c7-aa01-096980371055" />
         <classShapeMoniker Id="2877905b-1e2c-41f9-b584-08740e23824f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 3.29890305338542); (6.34375 : 3.29890305338542); (6.34375 : 2.84780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.25 : 3.29890305338542); (6.34375 : 3.29890305338542); (6.34375 : 2.84780110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PlaceSatedButterDataContext/User/User_Action" />
       <nodes>
         <classShapeMoniker Id="6f0ec287-0163-471a-a06e-70588e3d0afa" />

@@ -16,12 +16,7 @@
         <div id="place-adress">
         @Html.Raw(Model.AddressText)
         @Html.Hidden("AddressText", Model.AddressText)
-        </div>
-        @*@Html.Hidden("Address1", Model.Address1);
-        @Html.Hidden("Address2", Model.Address2);
-        @Html.Hidden("PostalCode", Model.PostalCode);
-        @Html.Hidden("City", Model.City);
-        @Html.Hidden("CountryCode", Model.CountryCode);*@
+        </div>       
     </div>
     <div class="modal-body">
         <div class="control-group">
@@ -40,7 +35,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <textarea id="textareaComment" placeholder="Ce que vous avez aimé ou pas dans ce lieu." value="@Model.Comment"></textarea>
+                <textarea id="textareaComment" name="Comment" placeholder="Ce que vous avez aimé ou pas dans ce lieu." value="@Model.Comment"></textarea>
             </div>
         </div>      
     </div>

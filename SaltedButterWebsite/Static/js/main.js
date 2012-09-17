@@ -26,7 +26,7 @@
             return false;
         });
 
-        map.on('moveend', setMarkerLayer);
+        //map.on('moveend', setMarkerLayer);
 
         if ($("input[name='success']").length > 0) {
             $("#notification-bar").show();
@@ -50,9 +50,10 @@
                 var place = mapQPlaceToPlace(qPlace);
                 addMarker(place, group);
             });
+            map.addLayer(group);
         });
 
-        map.addLayer(group);
+       
     }
 
     // Add the marker matching the given place on the map
@@ -83,7 +84,7 @@
         });
 
         var icon = new MyIcon();
-        var zindex = 0;
+        var zindex = 800;
         if (place == 'result') {
             zindex = 1000;
         }
@@ -361,7 +362,7 @@
         }
 
         if (qPlace.Place.Address2 !== null) {
-            vicinity += qPlace.Place.Address1 + "<br>";
+            vicinity += qPlace.Place.Address2 + "<br>";
         }
 
         if (qPlace.Place.PostalCode !== null || qPlace.Place.City !== null) {

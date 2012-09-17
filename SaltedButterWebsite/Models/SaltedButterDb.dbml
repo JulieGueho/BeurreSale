@@ -9,10 +9,10 @@
       <Column Name="PLC_ADDRESS2" Member="Address2" Storage="_PLC_ADDRESS2" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="PLC_CITY" Member="City" Storage="_PLC_CITY" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="PLC_PC" Member="PostalCode" Storage="_PLC_PC" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CTR_ID" Member="CountryId" Storage="_CTR_ID" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="PLC_LATITUDE" Member="Latitude" Storage="_PLC_LATITUDE" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="PLC_LONGITUDE" Member="Longitude" Storage="_PLC_LONGITUDE" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="PLC_ACTIVE" Member="Active" Storage="_PLC_ACTIVE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PLC_COUNTRY" Member="Country" Type="System.String" CanBeNull="false" />
       <Association Name="Place_Action" Member="Actions" Storage="_T_ACTIONs" AccessModifier="Internal" ThisKey="ID" OtherKey="PlaceId" Type="Action" />
     </Type>
   </Table>
