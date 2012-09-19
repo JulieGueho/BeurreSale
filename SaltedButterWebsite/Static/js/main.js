@@ -28,36 +28,31 @@
 
         //map.on('moveend', setMarkerLayer);
 
+        // Success notifications displays when info ok is sent from previous page
         if ($("input[name='success']").length > 0) {
-            $("#notification-bar").show();
-            $("#close-notification").click(function () {
-                $("#notification-bar").hide();
+            $("#notification-bar").show().delay(4000).fadeOut('slow'); //Notification disappears itself after 4s
+            $("#notification-bar .close").click(function () { // Or it can be closed manually
+                $("#notification-bar").fadeOut('slow');
             });
         }
     });
 
-    // Get markers which fit in the viewport
+    // Set markers from db on the map
     function setMarkerLayer() {
-        var latMax = map.getBounds().getSouthEast().lat;
-        var latMin = map.getBounds().getNorthWest().lat;
-        var lngMax = map.getBounds().getNorthWest().lng;
-        var lngMin = map.getBounds().getSouthEast().lng;
-
         var group = new L.LayerGroup();
 
         $.getJSON('SaltedButter', function (data) {
             $.each(data, function (index, qPlace) {
                 var place = mapQPlaceToPlace(qPlace);
-                addMarker(place, group);
+                var marker = addMarker(place);
+                group.addLayer(marker);
             });
             map.addLayer(group);
         });
-
-       
     }
 
     // Add the marker matching the given place on the map
-    function addMarker(place, group) {
+    function addMarker(place) {
         // Propriété du marker
         var latlng = new L.LatLng(place.Latitude, place.Longitude);
 
@@ -74,35 +69,39 @@
                 break;
         }
 
-        var MyIcon = L.Icon.extend({
+        var placeIconType = L.Icon.extend({ options: {
             iconUrl: image,
-            shadowUrl: undefined,
+            shadowUrl: null,
             iconSize: new L.Point(28, 40),
-            shadowSize: new L.Point(28, 40),
+            shadowSize: null,
             iconAnchor: new L.Point(14, 40),
             popupAnchor: new L.Point(0, -40)
+        }
         });
 
-        var icon = new MyIcon();
-        var zindex = 800;
-        if (place == 'result') {
+        var placeIcon = new placeIconType();
+
+        var zindex = 1;
+        // If result of API, marker appears above
+        if (place.Type == 'result') {
             zindex = 1000;
         }
 
-        var marker = new L.Marker(latlng, { icon: icon, zIndexOffset: zindex });
+        var marker = new L.Marker(latlng, { icon: placeIcon, zIndexOffset: zindex });
 
-        marker._leaflet_id = place.ID;
+        marker._leaflet_id = "id" + place.ID; // Add "id" so there is no confusion with another leaflet object id
 
-        var markerContent = "<div class='adressInfoWindow'>" + place.Name + "<br>" + place.Vicinity + "</div>"
+        var markerContent = "<div class='adressInfoWindow'><i class='icon-map-marker'></i> " + place.Name + "<br>" + place.Vicinity + "</div>"
 
         if (place.Type == 'result') {
-            markerContent += "<br><div id='" + place.ID + "'>Ajouter</div>";
+            markerContent += "<br>Nous ne connaissons pas cet endroit<br><div id='" + place.ID + "' class='addAddressLink'>Ajouter cette adresse ?</div>";
             marker.bindPopup(markerContent).on('click', onPlaceAddClick);
         }
         else {
             marker.bindPopup(markerContent).on('click', onMarkerClick);
         }
-        group.addLayer(marker);
+
+        return marker;
     }
 
     function onPlaceAddClick(e) {
@@ -111,17 +110,22 @@
 
             $.get("SaltedButter/NoteAdd?id=" + placeId, function (data) {
                 setAddNote(data);
+                $("body").css('cursor', 'auto');
+                $("#note").show();
             });
+
+            $("body").css('cursor', 'wait');
         });
     }
 
 
     function onMarkerClick(e) {
 
-        var id = e.target._leaflet_id;
+        var id = e.target._leaflet_id.substring(2);
 
         $.get("SaltedButter/Note?id=" + id, function (data) {
             $("#note").html(data);
+            setupCloseBehavior();
         });
     }
 
@@ -151,10 +155,22 @@
             onPlaceSubmit(this);
             return false;
         });
+
+        setupCloseBehavior();
+    }
+
+    //When closing marker popup, note closes as well
+    //When closing note, marker popup closes as well
+    function setupCloseBehavior() {
+        $("#note").show();
+        $(".close,.leaflet-popup-close-button").click(function () {
+            $("#note").fadeOut('slow');
+            map.closePopup();
+        })
+
     }
 
     function searchSubmit(e) {
-
         // URL of Nokia API RESTful Places
         // REQUEST must be replaced by request entered by user
         var url = "http://demo.places.nlp.nokia.com/places/v1/discover/search?at=48.856,2.352&q=REQUEST&size=10&app_id=EOXbMEWYAllPhQnAQsmn&app_code=9TIppnJDB9PHy8-ckJLWXA";
@@ -246,8 +262,12 @@
             else if (otherPlaceList.length > 0) {
                 display(otherPlaceList);
             }
-
+            $('body').css('cursor', 'auto');
         });
+
+        $('#note').hide();
+        map.closePopup();
+        $('body').css('cursor', 'wait');
     }
 
     function display(resultList) {
@@ -281,7 +301,9 @@
                 map.panTo(new L.LatLng(place.Latitude, place.Longitude));
             }
 
-            addMarker(place, resultLayer);
+            var marker = addMarker(place);
+            resultLayer.addLayer(marker);
+            marker.openPopup();
         }
         else {
             var maxLat;
@@ -290,12 +312,13 @@
             var minLng;
             var place;
             var nbMarkerVisible = 0;
-
+            var marker;
             $.each(resultList, function (index, result) {
                 place = mapNokiaResultToPlace(result);
 
                 // Place is added whatever the bounds are to avoid making another loop
-                addMarker(place, resultLayer);
+                marker = addMarker(place);
+                resultLayer.addLayer(marker);
 
                 if (map.getBounds().contains(new L.LatLng(place.Latitude, place.Longitude))) {
                     // If there's at least one marker visible then the viewport remains still

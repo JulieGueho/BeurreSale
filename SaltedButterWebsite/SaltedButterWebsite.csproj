@@ -157,6 +157,7 @@
     <Content Include="Static\img\title.png" />
     <Content Include="Static\img\zoom-in.png" />
     <Content Include="Static\img\zoom-out.png" />
+    <Content Include="Static\js\bootstrap.js" />
     <Content Include="Static\js\jquery-1.8.0.js" />
     <Content Include="Static\js\jquery-1.8.0.min.js" />
     <Content Include="Static\js\jquery-ui-1.8.11.js" />

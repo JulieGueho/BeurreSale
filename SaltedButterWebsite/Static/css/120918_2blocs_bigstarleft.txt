@@ -1,0 +1,4 @@
+<div id="header">
+        <img id="star" src="~/Static/img/star.png" alt="logo-star"/>
+        <img id="logo" src="~/Static/img/logo.png" alt="logo-beuresale.fr"/>			
+    </div>

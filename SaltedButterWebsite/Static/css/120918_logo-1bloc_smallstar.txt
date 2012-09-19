@@ -1,0 +1,3 @@
+<div id="header">
+        <img id="logo" src="~/Static/img/logo.png" alt="logo-star"/>        	
+    </div>

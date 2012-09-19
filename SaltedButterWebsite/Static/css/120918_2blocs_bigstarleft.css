@@ -117,11 +117,6 @@ body{
     margin-bottom:0px;
 }
 
-.control-group
-{
-    margin-right: 10px;
-}
-
 #place-address
 {
     font-size: 13px;
@@ -147,21 +142,15 @@ body{
 
 #comment
 {
-    padding:0px 0px 10px 0px;
-}
-
-#textareaComment
-{
-    width:100%;
+    padding:10px 0px 10px 0px;
 }
 
 #author{
-    padding:0px 25px 10px;
+    padding: 10px 25px;
     font-style: italic;
     font-size: 12px;
-    text-align: right;    
+    text-align: right;
 }
-
 form {
 margin: 0 0 18px;
 }
@@ -231,10 +220,10 @@ background: none;
     padding-left:67px;
 }
 
-#notification-bar .close
+.close
 {
     position: relative;
-    top:10px;
+    bottom: 90px;
     right: 80px;
     font-size:40px;
 }
@@ -256,6 +245,9 @@ background: none;
 	background-image: url(../img/zoom-in.png);
 }
 
+.leaflet-popup-close-button {
+	background: white url(../img/popup-close.png);
+}
 /*****End Leaflet Properties*****/
 
 .no-display{

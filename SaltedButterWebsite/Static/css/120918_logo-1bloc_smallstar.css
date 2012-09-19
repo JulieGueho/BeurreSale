@@ -27,21 +27,9 @@ body{
           box-shadow: 0px 5px 5px #d2d2d2;
 }
 
-#star{
-	width:149px;
-	height:138px;
-	margin:8px 3px 0 3px;
-	position:relative;
-	z-index:3;
-}
-
 #logo{
-	width:307px;
-	height:59px;
-	margin:4px 3px 0 3px;
-	position:relative;
-	top:-46px;
-	z-index:3;
+	height: 56px;
+    padding: 2px 40px;
 }
 
 #header p{
@@ -70,11 +58,11 @@ body{
 
 #search-submit
 {
-    margin:8px 0 8px 160px;
+    margin:8px 0 8px 38px;
 }
 
 #appendedInputButton{
-	width:285px;
+	width:245px;
 	
 }
 
@@ -117,11 +105,6 @@ body{
     margin-bottom:0px;
 }
 
-.control-group
-{
-    margin-right: 10px;
-}
-
 #place-address
 {
     font-size: 13px;
@@ -147,21 +130,15 @@ body{
 
 #comment
 {
-    padding:0px 0px 10px 0px;
-}
-
-#textareaComment
-{
-    width:100%;
+    padding:10px 0px 10px 0px;
 }
 
 #author{
-    padding:0px 25px 10px;
+    padding: 10px 25px;
     font-style: italic;
     font-size: 12px;
-    text-align: right;    
+    text-align: right;
 }
-
 form {
 margin: 0 0 18px;
 }
@@ -231,10 +208,10 @@ background: none;
     padding-left:67px;
 }
 
-#notification-bar .close
+.close
 {
     position: relative;
-    top:10px;
+    bottom: 90px;
     right: 80px;
     font-size:40px;
 }
@@ -256,6 +233,9 @@ background: none;
 	background-image: url(../img/zoom-in.png);
 }
 
+.leaflet-popup-close-button {
+	background: white url(../img/popup-close.png);
+}
 /*****End Leaflet Properties*****/
 
 .no-display{

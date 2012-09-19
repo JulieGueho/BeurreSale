@@ -80,7 +80,7 @@ namespace SaltedButterWebsite.Controllers
                     NokiaPlace nokiaPlace = (NokiaPlace)readTask.Result;                    
                     place.AddressText = nokiaPlace.Location.Address["text"];                   
                     place.PlaceId = nokiaPlace.PlaceId;
-                         
+                    place.Name = nokiaPlace.Name;
                 });
                    
             });
@@ -150,7 +150,8 @@ namespace SaltedButterWebsite.Controllers
                     SaltedButter = saltedButter,
                     User = user,
                     CreationDate = DateTime.Now,
-                    StatusId = 1
+                    StatusId = 1,
+                    CategoryId = 1
                 };
 
                 _dataContext.Actions.InsertOnSubmit(action);

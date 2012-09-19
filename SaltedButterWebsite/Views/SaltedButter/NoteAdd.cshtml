@@ -5,6 +5,7 @@
     <form id="addForm" action="SaltedButter/Create" method="post" class="form">
     <input type="hidden" id="placeid" name="PlaceId" value="@Model.PlaceId" />
 	<div class="modal-header">
+    <a href="#" class="close" data-dismiss="alert">×</a>
         <div id="place-name">
             <div class="control-group">                
                 <div class="controls">
@@ -13,7 +14,7 @@
                 </div>
               </div>
         </div>
-        <div id="place-adress">
+        <div id="place-address">
         @Html.Raw(Model.AddressText)
         @Html.Hidden("AddressText", Model.AddressText)
         </div>       
@@ -35,7 +36,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <textarea id="textareaComment" name="Comment" placeholder="Ce que vous avez aimé ou pas dans ce lieu." value="@Model.Comment"></textarea>
+                <textarea id="textareaComment" name="Comment" rows="4" placeholder="Ce que vous avez aimé ou pas dans ce lieu." value="@Model.Comment"></textarea>
             </div>
         </div>      
     </div>
