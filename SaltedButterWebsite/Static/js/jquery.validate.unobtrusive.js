@@ -111,6 +111,7 @@
                     messages: {},
                     rules: {},
                     success: $.proxy(onSuccess, form)
+
                 },
                 attachValidation: function () {
                     $form

@@ -41,11 +41,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Json">
       <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -108,13 +111,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessClass\PlaceSearch.cs" />
+    <Compile Include="BusinessClass\SaltedButterValidation.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\SaltedButterController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IPlaceRepository.cs" />
     <Compile Include="Models\NokiaPlace.cs" />
+    <Compile Include="Models\NokiaResult.cs" />
     <Compile Include="Models\PlaceRepository.cs" />
     <Compile Include="Models\SaltedButterDb.cs">
       <DependentUpon>SaltedButterDb.dbml</DependentUpon>
@@ -124,8 +131,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SaltedButterDb.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\SaltedButterAddViewModel.cs" />
+    <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="ViewModel\SaltedButterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +170,7 @@
     <Content Include="Static\js\jquery-1.8.0.min.js" />
     <Content Include="Static\js\jquery-ui-1.8.11.js" />
     <Content Include="Static\js\jquery-ui-1.8.11.min.js" />
+    <Content Include="Static\js\jquery.activity-indicator-1.0.0.min.js" />
     <Content Include="Static\js\jquery.jgrowl_minimized.js" />
     <Content Include="Static\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Static\js\jquery.unobtrusive-ajax.min.js" />
@@ -188,14 +197,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BusinessClass\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Site.Master" />
@@ -208,6 +216,9 @@
     <Content Include="Views\SaltedButter\Note.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\SaltedButter\NoteAdd.cshtml" />
+    <Content Include="Views\Test\Create.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\SaltedButter\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\SaltedButterDb.dbml.layout">

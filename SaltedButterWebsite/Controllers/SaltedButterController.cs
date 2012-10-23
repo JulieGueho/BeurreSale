@@ -17,10 +17,9 @@ namespace SaltedButterWebsite.Controllers
         //
         // GET: /SaltedButter/       
         public JsonResult Index()
-        {           
-            var placeSaltedButterList = from action in _dataContext.Actions
-                                        where action.CategoryId == 1
-                                        select action;            
+        {
+            var placeSaltedButterList = _dataContext.Actions.Where(a => a.CategoryId == 1);
+                        
             return Json(placeSaltedButterList, JsonRequestBehavior.AllowGet);                                                                                            
         }
 
@@ -81,6 +80,8 @@ namespace SaltedButterWebsite.Controllers
                     place.AddressText = nokiaPlace.Location.Address["text"];                   
                     place.PlaceId = nokiaPlace.PlaceId;
                     place.Name = nokiaPlace.Name;
+                    place.Latitude = nokiaPlace.Location.Position[0];
+                    place.Longitude = nokiaPlace.Location.Position[1];
                 });
                    
             });
@@ -118,7 +119,6 @@ namespace SaltedButterWebsite.Controllers
                         // Mapping information provided by API
                         NokiaPlace nokiaPlace = (NokiaPlace)readTask.Result;        
                         place.Address1 = nokiaPlace.Location.Address["street"];
-                        place.Address2 = nokiaPlace.Location.Address["district"];
                         place.City = nokiaPlace.Location.Address["city"];
                         place.PostalCode = nokiaPlace.Location.Address["postalCode"];
                         place.Country = nokiaPlace.Location.Address["country"];
@@ -158,9 +158,15 @@ namespace SaltedButterWebsite.Controllers
 
                 _dataContext.SubmitChanges();
 
+                MapViewModel map = new MapViewModel()
+                {
+                    Latitude = place.Latitude,
+                    Longitude = place.Longitude
+                };
+
                 //_dataContext.Places.InsertOnSubmit(place);
                 TempData["success"] = "ok"; // Indicating to display ok notification after redirection
-                return Json(new { url = "Map" });
+                return RedirectToAction("Index", "Map", map);
                 
             }
 
@@ -204,5 +210,59 @@ namespace SaltedButterWebsite.Controllers
 
             return returnValue;
         }
+
+        public JsonResult PlaceExist(string name, double latitude, double longitude)
+        {
+            int existenceIndice = PlaceExistence(name, latitude, longitude);
+            if (existenceIndice == 0)
+            {
+                return Json("Celui-là on l'a déjà.", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Cool celui-là on ne l'a pas encore.", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #region Private methods
+        /// <summary>
+        /// Testing place existence in salted Butter category
+        /// </summary>
+        /// <param name="name">Name of the place</param>
+        /// <param name="latitude">Latitude</param>
+        /// <param name="longitude">Longitude</param>
+        /// <returns>placeId if place exists with no element linked in the specified category, 0 if exists, -1 if place doesn't exist</returns>
+        private int PlaceExistence(string name, double latitude, double longitude)
+        {            
+            double[] rangeLat = {latitude - 0.01, longitude+0.01};
+
+            var placeList = from place in _dataContext.Places
+                            where place.Name == name
+                            && (place.Latitude > rangeLat[0] && place.Longitude < rangeLat[1])
+                            select place;
+
+            if (placeList.Any())
+            {
+                int placeId = placeList.First().ID;
+                bool exist = (from action in _dataContext.Actions
+                              where action.CategoryId == 1
+                              && action.PlaceId == placeId
+                              select action).Any();
+                if (exist)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return placeId;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        #endregion
     }
 }

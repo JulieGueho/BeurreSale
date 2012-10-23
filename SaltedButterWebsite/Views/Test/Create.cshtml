@@ -1,0 +1,22 @@
+﻿@model SaltedButterWebsite.Models.TestModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Create</h2>
+<form>
+    <input id="Name" name="Name" value="@Model.Name" />
+    @Html.ValidationMessageFor(model => model.Name)
+    @Html.TextBoxFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+    <input type="submit"/>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {        
+        var settngs = $.data($('form')[0], 'validator').settings;        
+        settngs.onfocusout = function (element) { $(element).valid(); };        
+    });    
+</script>
+

@@ -35,6 +35,10 @@
                 $("#notification-bar").fadeOut('slow');
             });
         }
+
+        if ($("#latitude").val() != 0 && $("#longitude").val() != 0) {
+            map.setView(new L.LatLng($("#latitude").val(), $("#longitude").val()), 15);
+        }
     });
 
     // Set markers from db on the map
@@ -112,6 +116,7 @@
                 setAddNote(data);
                 $("body").css('cursor', 'auto');
                 $("#note").show();
+                jQuery.validator.unobtrusive.parse('form');
             });
 
             $("body").css('cursor', 'wait');
@@ -434,5 +439,7 @@
         };
         return place;
     }
+
+
 
 })(jQuery);

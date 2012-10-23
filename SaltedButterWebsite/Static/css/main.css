@@ -27,20 +27,9 @@ body{
           box-shadow: 0px 5px 5px #d2d2d2;
 }
 
-#star{
-	width:149px;
-	height:138px;
-	margin:8px 3px 0 3px;
-	position:relative;
-	z-index:3;
-}
-
-#logo{
-	width:307px;
-	height:59px;
-	margin:4px 3px 0 3px;
-	position:relative;
-	top:-46px;
+#logo{	
+	height:56px;
+	margin:2px 0px 2px 50px;	
 	z-index:3;
 }
 
@@ -70,11 +59,11 @@ body{
 
 #search-submit
 {
-    margin:8px 0 8px 160px;
+    margin:8px 0 8px 40px;
 }
 
 #appendedInputButton{
-	width:285px;
+	width:260px;
 	
 }
 
@@ -179,7 +168,7 @@ background: none;
 
 .field-validation-error{
     float: right;
-    width: 150px;
+    width: 140px;
     font-size: 12px;
     line-height:normal;
 }

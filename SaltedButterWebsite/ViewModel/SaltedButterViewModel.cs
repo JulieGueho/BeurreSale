@@ -6,9 +6,11 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using SaltedButterWebsite.Models;
+using SaltedButterWebsite.BusinessClass;
 
 namespace SaltedButterWebsite.ViewModel
 {
+    
     public class SaltedButterViewModel
     {
         #region Private properties
@@ -17,18 +19,13 @@ namespace SaltedButterWebsite.ViewModel
                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
         #endregion
 
-        #region Public properties
-        //public string[] Address { get; set; }
-        //public string Address1 { get; set; }
-        //public string Address2 { get; set; }
-        //public string PostalCode { get; set; }
-        //public string City { get; set; }
-        //public string CountryCode { get; set; }        
+        #region Public properties   
 
         #region Validation properties
         // Name of the place
         // Can be defined by the creator if the place to create is an address instead of a defined place such as a restaurant
         [Required(ErrorMessage = "Vous devez entrer un nom de lieu.")]
+        [Remote("PlaceExist","SaltedButter",ErrorMessage="Celui-là on l'a déjà.", AdditionalFields="Latitude,Longitude")]
         public string Name { get; set; }
 
         // Does this place offers salted butter
@@ -50,7 +47,8 @@ namespace SaltedButterWebsite.ViewModel
         [AllowHtml]
         public string AddressText { get; set; }
         public string PlaceId { get; set; }
-        public double[] Position { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         // Period since the place was created
         public string Interval { get; set; }

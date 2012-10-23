@@ -1,4 +1,6 @@
-﻿@{
+﻿@model SaltedButterWebsite.ViewModel.MapViewModel
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,8 +8,7 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="test"></div>
     <div id="header">
-        <img id="star" src="~/Static/img/star.png" alt="logo-star"/>
-        <img id="logo" src="~/Static/img/logo.png" alt="logo-beuresale.fr"/>			
+        <img id="logo" src="~/Static/img/logo.png" alt="logo-star"/>        	
     </div>
     <div id="container-main">
         <div id="search-header">
@@ -25,6 +26,9 @@
         <div id="map_canvas"></div>
         <div id="note"></div>
     </div>
+    <input id="latitude" type="hidden" value="@Model.Latitude" />
+    <input id="longitude" type="hidden" value="@Model.Longitude" />
+
     @if (TempData["success"] != null)
     {
         @Html.Hidden("success", TempData["success"]);
