@@ -8,9 +8,14 @@ using SaltedButterWebsite.Models;
 
 namespace SaltedButterWebsite.BusinessClass
 {
-    public class PlaceSearch
+    public class BasePlace
     {
-        public PlaceSearch(Models.Place place)
+        public BasePlace()
+        {}
+
+        
+
+        public BasePlace(Models.Place place)
         {
             this.DbId = place.ID;
             this.Name = place.Name;
@@ -20,12 +25,13 @@ namespace SaltedButterWebsite.BusinessClass
             this.IsPrecisePlace = true;
         }
 
-        public PlaceSearch(Item place)
+        public BasePlace(Item place)
         {
             this.NokiaId = place.Id;
             this.Name = place.Title;
             this.Latitude = place.Position[0];
             this.Longitude = place.Position[1];
+            this.IsPrecisePlace = true;
             this.AlreadyInDb = false;
         }
 
@@ -47,7 +53,7 @@ namespace SaltedButterWebsite.BusinessClass
 
         public bool Center{get;set;}
 
-        public static Item[] ApiSearch(string initialSearchString)
+        public List<BasePlace> ApiSearch(string initialSearchString)
         {
             string url = "http://demo.places.nlp.nokia.com/places/v1/discover/search?at=48.856,2.352&q=REQUEST&size=10&app_id=EOXbMEWYAllPhQnAQsmn&app_code=9TIppnJDB9PHy8-ckJLWXA";
 
@@ -83,10 +89,10 @@ namespace SaltedButterWebsite.BusinessClass
             taskGet.Wait();
 
             //Filter Nokia results
-            return result.Results.Items;
+            return SortNokiaPlace(result.Results.Items, searchString);
         }
 
-        public static IQueryable<Models.Place> DbSearch(string initialSearchString)
+        public List<BasePlace> DbSearch(string initialSearchString)
         {
             var cleanString = initialSearchString.Trim().Replace(',', ' ').Replace(';', ' ');
             string[] words = cleanString.Split(' ');
@@ -106,30 +112,30 @@ namespace SaltedButterWebsite.BusinessClass
 
             }
 
-            return places;
+            return places.Select(item => new BasePlace(item)).ToList();
         }
 
-        public static void GetList(string initialSearchString)
+        public void GetList(string initialSearchString)
         {
-            Item[] nokiaPlaces = ApiSearch(initialSearchString);
-            IQueryable<Models.Place> dbPlaces = DbSearch(initialSearchString);
+            var nokiaPlaces = this.ApiSearch(initialSearchString);
+            var dbPlaces = this.DbSearch(initialSearchString);
 
-            List<PlaceSearch> list = new List<PlaceSearch>();
-            foreach (Item place in nokiaPlaces)
+            List<BasePlace> list = new List<BasePlace>();
+            foreach (var place in nokiaPlaces)
             {
-                var dbPlaceWithSameName = dbPlaces.Where(p => p.Name == place.Title);
+                var dbPlaceWithSameName = dbPlaces.Where(p => p.Name == place.Name);
                 foreach (var dbPlace in dbPlaceWithSameName)
                 {
-                    list.Add(new PlaceSearch(dbPlace));
-                    if (!IsTheSamePlace(place.Position, new double[] { dbPlace.Latitude, dbPlace.Longitude }))
+                    list.Add(dbPlace);
+                    if (!IsTheSamePlace(new double[] { place.Latitude, place.Longitude }, new double[] { dbPlace.Latitude, dbPlace.Longitude }))
                     {
-                        list.Add(new PlaceSearch(place));
+                        list.Add(place);
                     }
                 }
 
                 if(dbPlaceWithSameName == null)
                 {
-                    list.Add(new PlaceSearch(place));
+                    list.Add(place);
                 }
             }
         }
@@ -154,9 +160,42 @@ namespace SaltedButterWebsite.BusinessClass
             return Math.PI * angle / 180.0;
         }
 
-        private static bool SortNokiaPlace()
+        private List<BasePlace> SortNokiaPlace(Item[] list, string searchString)
         {
-            return false;
+            List<BasePlace> filteredList = new List<BasePlace>();
+            if (list.Any(item => item.Category.Id == "city-town-village" || item.Category.Id == "administrative-region"))
+            {
+                var region = list.First(item => item.Category.Id == "administrative-region");
+                if (region == null)
+                {
+                    region = list.First(item => item.Category.Id == "city-town-village");
+                }
+
+                filteredList.Add(new BasePlace
+                {
+                    IsPrecisePlace = false,
+                    Center = true,
+                    Latitude = region.Position[0],
+                    Longitude = region.Position[1],
+                });
+            }
+            else
+            {
+                var searchWords = searchString.Replace('-', ' ').Split(' ');
+                var exactTitle = list.Where(item => searchWords.All(word => item.Title.Contains(word)));
+                if (exactTitle != null)
+                {
+                    filteredList = exactTitle
+                                    .Select(item => new BasePlace(item))
+                                   .ToList();
+                }
+                else
+                {
+                    filteredList = list.Select(item => new BasePlace(item)).ToList();
+                }
+            }
+
+            return filteredList;
         }
 
 
